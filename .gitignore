@@ -21,8 +21,8 @@ backend/.venv/
 backend/env/
 backend/.env/
 backend/.env
-backend/__pycache__/
-backend/*.pyc
 backend/build/
 backend/dist/
 backend/*.egg-info/
+backend/**/__pycache__/
+backend/**/*.pyc
