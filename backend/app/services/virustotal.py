@@ -10,6 +10,9 @@ BASE_URL = "https://www.virustotal.com/api/v3"
 
 
 async def get_url(url: str):
+    if not API_KEY:
+        print("❌ Error: No se encontró la variable VIRUSTOTAL_API_KEY en el archivo .env")
+        return {"status": "error", "message": "Configuración del servidor incompleta (Falta API Key)."}
 
     url_base64 = base64.urlsafe_b64encode(url.encode()).decode().strip("=")
 
@@ -17,6 +20,10 @@ async def get_url(url: str):
     headers = {"accept": "application/json", "X-Apikey": API_KEY}
     async with httpx.AsyncClient() as client:
         response = await client.get(endpoint, headers=headers)
+        
+        if response.status_code == 404:
+            return {"status": "no-encontrado", "message": "Esta URL no ha sido analizada por VirusTotal previamente."}
+            
         response.raise_for_status()
         data = response.json()
 
