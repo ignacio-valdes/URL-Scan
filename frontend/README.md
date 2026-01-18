@@ -1,16 +1,13 @@
-# React + Vite
+# Frontend - URL-Scan
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Please refer to the [Main Documentation](../README.md) in the root directory.
 
-Currently, two official plugins are available:
+## ⚠️ Legal Disclaimer
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+This tool is provided for educational and research purposes only. The author is not responsible for any misuse of this software or any legal consequences arising from its use.
 
-## React Compiler
+This project interacts with the VirusTotal API. Users are responsible for complying with the VirusTotal Terms of Service. You must obtain and use your own personal API Key. The author of this repository does not provide API keys and is not affiliated with VirusTotal.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 👨‍💻 Author
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- [Ignacio Valdés](https://github.com/ignacio-valdes)
