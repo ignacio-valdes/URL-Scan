@@ -1,49 +1,35 @@
 import { useEffect, useState } from "react";
 
-async function getCurrentTab() {
-  let queryOptions = { active: true, lastFocusedWindow: true };
-  try {
-    let [tab] = await chrome.tabs.query(queryOptions);
-    return tab;
-  } catch (error) {
-    console.error("Error al obtener la url:", error);
-    return null;
-  }
-}
-
 function App() {
   const [url, setUrl] = useState("");
-  const [status, setStatus] = useState("");
+  const [status, setStatus] = useState("Cargando...");
 
   useEffect(() => {
-    async function fetchData() {
-      const tab = await getCurrentTab();
-      setUrl(tab.url);
-      fetch("http://127.0.0.1:8000/analizar-url", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ url: tab.url }),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          if (data.status === "encontrado") {
-            console.log("URL encontrada en la base de datos.");
-            if (data.stats.malicioso > 0) {
-              setStatus("Malicioso");
-            } else {
-              setStatus("Seguro");
-            }
-          } else {
-            console.log("URL no encontrada.");
-          }
-        })
-        .catch((error) => {
-          console.error("Error al enviar la URL:", error);
-        });
+    async function initPopup() {
+      try {
+        // Una sola solicitud, esperar hasta 1 segundo
+        const response = await Promise.race([
+          new Promise((resolve) => {
+            chrome.runtime.sendMessage({ action: "getAnalysis" }, (res) => {
+              resolve(res);
+            });
+          }),
+          new Promise((resolve) => setTimeout(() => resolve(null), 1000)),
+        ]);
+
+        if (response?.url && response?.status) {
+          setUrl(response.url);
+          setStatus(response.status);
+        } else {
+          setStatus("Error: No hay datos disponibles");
+        }
+      } catch (error) {
+        console.error("Error:", error);
+        setStatus("Error de conexión");
+      }
     }
-    fetchData();
+
+    initPopup();
   }, []);
 
   return (
@@ -53,9 +39,14 @@ function App() {
           <img src="icons/logo.png" alt="logo" className="size-10" />
         </nav>
         <div className="flex flex-col">
-          <h1 className="text-center mt-4 font-bold">URL:</h1>
-          <div className="rounded-lg h-10 flex bg-white opacity-65 border-2 border-gray-400 m-4 p-2 place-content-center">
-            <p>{status}</p>
+          <h1 className="text-center mt-4 font-bold text-sm">URL:</h1>
+          <div className="rounded-lg flex bg-gray-100 border-2 border-gray-300 m-4 p-2 place-content-center">
+            <p className="text-xs text-gray-700 truncate">{url || "Obteniendo URL..."}</p>
+          </div>
+          
+          <h1 className="text-center mt-4 font-bold text-sm">Estado:</h1>
+          <div className="rounded-lg flex bg-white border-2 border-gray-400 m-4 p-2 place-content-center min-h-10">
+            <p className="text-sm font-semibold">{status}</p>
           </div>
         </div>
       </div>

@@ -1,88 +1,129 @@
 # URL-Scan
 
-Bienvenido al repositorio de **URL-Scan**. Este proyecto es una **extensión de navegador** diseñada para el escaneo y análisis de URLs.
+Extensión de navegador Chrome para escaneo y análisis de URLs usando VirusTotal API.
 
-## Estructura del Proyecto
+## 🎯 Características
 
-El repositorio contiene la siguiente estructura principal:
+- ✅ Análisis automático de URLs al cargar páginas
+- ✅ Badge visual con estado de seguridad
+- ✅ Popup con información detallada
+- ✅ Una solicitud por página (caching inteligente)
+- ✅ Bajo consumo de recursos
+- ✅ Interfaz moderna con TailwindCSS
 
-- **frontend/**: La interfaz de usuario de la aplicación, construida utilizando [Vite](https://vitejs.dev/) y [React](https://react.dev/).
-- **backend/**: El servidor API, construido con [FastAPI](https://fastapi.tiangolo.com/) y Python.
+## 📋 Requisitos
 
-## Comenzando
+- Node.js 18+ (frontend)
+- Python 3.8+ (backend)
+- Cuenta en [VirusTotal](https://www.virustotal.com/) con API Key
 
-Sigue estas instrucciones para configurar y ejecutar el proyecto en tu entorno local.
+## 🚀 Instalación Local
 
-### Prerrequisitos
-
-Asegúrate de tener instalado:
-- [Node.js](https://nodejs.org/) (versión LTS recomendada)
-- npm (normalmente incluido con Node.js)
-- [Python](https://www.python.org/) (versión 3.8 o superior)
-
-### Configuración del Frontend
-
-1. **Navega al directorio del frontend:**
-
-   ```bash
-   cd frontend
-   ```
-
-2. **Instala las dependencias:**
-
-   ```bash
-   npm install
-   ```
-
-3. **Inicia el servidor de desarrollo:**
-
-   ```bash
-   npm run dev
-   ```
-
-   La aplicación debería estar corriendo en `http://localhost:5173` (o el puerto que indique la consola).
-
-### Configuración del Backend
-
-1. **Navega al directorio del backend:**
-
-   ```bash
-   cd backend
-   ```
-
-2. **Crea y activa un entorno virtual:**
-
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # En Windows: venv\Scripts\activate
-   ```
-
-3. **Instala las dependencias:**
-
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-4. **Configura las variables de entorno:**
-
-   Crea un archivo `.env` dentro de la carpeta `backend/` y agrega tu API Key de VirusTotal:
-
-   ```env
-   VIRUSTOTAL_API_KEY=tu_api_key_aqui
-   ```
-
-5. **Inicia el servidor:**
-
-   ```bash
-   uvicorn app.main:app --reload
-   ```
-
-   El servidor estará escuchando en `http://127.0.0.1:8000`.
-
-## Construcción para Producción
-
-Para generar los archivos optimizados para producción, ejecuta:
+### Backend (FastAPI)
 
 ```bash
+cd backend
+python -m venv venv
+source venv/bin/activate  # Windows: venv\Scripts\activate
+pip install -r requirements.txt
+
+# Configurar variables de entorno
+cp .env.example .env
+# Editar .env con tu VIRUSTOTAL_API_KEY
+
+# Iniciar servidor
+uvicorn app.main:app --reload
+```
+
+El API estará en `http://127.0.0.1:8000`
+
+### Frontend (Extensión Chrome)
+
+```bash
+cd frontend
+npm install
 npm run build
 ```
+
+### Cargar extensión en Chrome
+
+1. Abre `chrome://extensions/`
+2. Activa "Modo de desarrollador"
+3. Click "Cargar extensión sin empaquetar"
+4. Selecciona la carpeta `frontend/dist`
+
+## 📦 Estructura
+
+```
+.
+├── backend/               # API FastAPI
+│   ├── app/
+│   │   ├── main.py       # Endpoint principal
+│   │   └── services/
+│   │       └── virustotal.py  # Integración VirusTotal
+│   ├── requirements.txt
+│   └── .env.example
+├── frontend/             # Extensión Chrome
+│   ├── src/
+│   │   └── App.jsx      # Componente popup
+│   ├── public/
+│   │   ├── manifest.json
+│   │   └── background.js # Service worker
+│   └── package.json
+└── DEPLOYMENT.md        # Guía de producción
+```
+
+## 🔒 Seguridad en Producción
+
+Antes de publicar, revisa [DEPLOYMENT.md](./DEPLOYMENT.md):
+
+- [ ] API Key en variables de entorno
+- [ ] CORS restringido a dominio específico
+- [ ] HTTPS habilitado
+- [ ] Validación de URLs
+- [ ] Rate limiting configurado
+
+## 📊 Estados de Seguridad
+
+- 🟢 **OK**: Seguro
+- 🔴 **MAL**: Malicioso
+- 🟠 **?**: No clasificado
+- ⚫ **ERR**: Error de conexión
+
+## 🛠 API Endpoints
+
+### POST `/analizar-url`
+Analiza una URL
+
+**Request:**
+```json
+{"url": "https://example.com"}
+```
+
+**Response:**
+```json
+{
+  "status": "encontrado",
+  "stats": {
+    "malicioso": 0,
+    "sospechoso": 0,
+    "no_clasificado": 0,
+    "seguro": 85
+  }
+}
+```
+
+### GET `/health`
+Verifica estado del API
+
+## 📝 Licencia
+
+MIT
+
+## 👨‍💻 Autor
+
+Desarrollado como proyecto educativo.
+
+---
+
+Para información de deployment, ver [DEPLOYMENT.md](./DEPLOYMENT.md)
