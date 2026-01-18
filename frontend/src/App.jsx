@@ -37,7 +37,7 @@ function App() {
     <>
       <div className="bg-white w-40 rounded-lg flex flex-col">
         <nav className="h-10 py-2 px-4">
-          <img src="icons/logo.png" alt="logo" className="size-10" />
+          <img src="icons/logo.svg" alt="logo" className="size-10" />
         </nav>
         <div className="flex flex-col">
           <h1 className="text-center mt-4 font-bold text-sm">URL:</h1>

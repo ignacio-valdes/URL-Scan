@@ -11,9 +11,9 @@
     "http://127.0.0.1:8000/*"
   ],
   "icons": {
-    "16": "icons/logo.png",
-    "48": "icons/logo.png",
-    "128": "icons/logo.png"
+    "16": "icons/logo-16.png",
+    "48": "icons/logo-48.png",
+    "128": "icons/logo-128.png"
   },
   "background": {
     "service_worker": "background.js"
@@ -22,9 +22,9 @@
     "default_popup": "index.html",
     "default_title": "Scan URL for security threats",
     "default_icon": {
-      "16": "icons/logo.png",
-      "48": "icons/logo.png",
-      "128": "icons/logo.png"
+      "16": "icons/logo-16.png",
+      "48": "icons/logo-48.png",
+      "128": "icons/logo-128.png"
     }
   }
 }

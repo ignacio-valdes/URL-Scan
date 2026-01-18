@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <!-- Escudo de fondo (Seguridad) -->
+  <path fill="#2563EB" d="M64,10 C30,10 15,35 15,60 C15,95 64,122 64,122 C64,122 113,95 113,60 C113,35 98,10 64,10 Z"/>
+  
+  <!-- Lupa (Escaneo) -->
+  <g stroke="#FFFFFF" stroke-width="8" stroke-linecap="round">
+    <circle cx="64" cy="60" r="22" fill="none"/>
+    <line x1="80" y1="76" x2="94" y2="90" />
+  </g>
+  
+  <!-- Checkmark (Verificado) -->
+  <path d="M52 60 L60 68 L76 52" fill="none" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
