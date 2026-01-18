@@ -1,23 +1,24 @@
-// Almacenar estado de análisis por pestaña
+// Store URL analysis results per tab
 const tabAnalysis = {};
 
-// API Backend URL (configurable)
+// API Backend URL (configurable for different environments)
 const API_URL = "http://127.0.0.1:8000";
 
+// Analyze URL when page finishes loading
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-  // Solo analizamos cuando la carga está completa y la URL es http/https
+  // Only analyze when page load is complete and URL is HTTP/HTTPS
   if (changeInfo.status === 'complete' && tab.url && tab.url.startsWith('http')) {
     analyzeUrl(tabId, tab.url);
   }
 });
 
-// Limpiar datos cuando se cierra la pestaña
+// Clean up cached data when tab is closed
 chrome.tabs.onRemoved.addListener((tabId) => {
   delete tabAnalysis[tabId];
 });
 
 async function analyzeUrl(tabId, url) {
-  // Indicador de carga (...)
+  // Loading indicator
   chrome.action.setBadgeText({ text: "...", tabId: tabId });
   chrome.action.setBadgeBackgroundColor({ color: "#888888", tabId: tabId });
 
@@ -34,26 +35,27 @@ async function analyzeUrl(tabId, url) {
     let badgeText = "?";
     let badgeColor = "#FFA500";
 
-    if (data.status === "encontrado") {
-      if (data.stats.malicioso > 0) {
+    // Determine security status based on VirusTotal analysis
+    if (data.status === "found") {
+      if (data.stats.malicious > 0) {
         badgeText = "MAL";
         badgeColor = "#FF0000";
-        statusText = "Malicioso ⚠️";
+        statusText = "Malicious ⚠️";
       } else {
         badgeText = "OK";
         badgeColor = "#00FF00";
-        statusText = "Seguro ✅";
+        statusText = "Safe ✅";
       }
     } else {
       badgeText = "?";
       badgeColor = "#FFA500";
-      statusText = "No clasificada";
+      statusText = "Unclassified";
     }
 
     chrome.action.setBadgeText({ text: badgeText, tabId: tabId });
     chrome.action.setBadgeBackgroundColor({ color: badgeColor, tabId: tabId });
     
-    // Guardar el análisis
+    // Cache the analysis result
     tabAnalysis[tabId] = {
       url: url,
       status: statusText,
@@ -61,18 +63,18 @@ async function analyzeUrl(tabId, url) {
       timestamp: Date.now()
     };
     
-    // Recordar la última pestaña analizada
+    // Remember last analyzed tab
     lastAnalyzedTabId = tabId;
     
-    console.log(`[URL-Scan] Análisis de ${url}: ${statusText}`);
+    console.log(`[URL-Scan] Analysis of ${url}: ${statusText}`);
   } catch (error) {
-    console.error("Error en background:", error);
+    console.error("Error in background service worker:", error);
     chrome.action.setBadgeText({ text: "ERR", tabId: tabId });
     chrome.action.setBadgeBackgroundColor({ color: "#000000", tabId: tabId });
     
     tabAnalysis[tabId] = {
       url: url,
-      status: "Error de conexión",
+      status: "Connection error",
       data: null,
       timestamp: Date.now()
     };
@@ -81,10 +83,10 @@ async function analyzeUrl(tabId, url) {
   }
 }
 
-// Guardar referencia a la última pestaña analizada
+// Reference to the last analyzed tab
 let lastAnalyzedTabId = null;
 
-// Permitir que el popup acceda a los datos
+// Message listener: Handle popup requests for analysis data
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === "getAnalysis") {
     const tabId = request.tabId || sender.tab?.id || lastAnalyzedTabId;

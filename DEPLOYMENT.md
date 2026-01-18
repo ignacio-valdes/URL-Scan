@@ -1,31 +1,31 @@
 # URL-Scan - DEPLOYMENT GUIDE
 
-## Producción - Backend FastAPI
+## Production - FastAPI Backend
 
-### 1. Configurar variables de entorno
+### 1. Configure environment variables
 
 ```bash
 cp backend/.env.example backend/.env
-# Editar backend/.env con tus valores reales
-export VIRUSTOTAL_API_KEY=tu_api_key
-export ALLOWED_ORIGINS=https://tu-dominio.com
+# Edit backend/.env with your real values
+export VIRUSTOTAL_API_KEY=your_api_key
+export ALLOWED_ORIGINS=https://your-domain.com
 ```
 
-### 2. Instalar dependencias
+### 2. Install dependencies
 
 ```bash
 cd backend
 pip install -r requirements.txt
 ```
 
-### 3. Ejecutar con Gunicorn (recomendado para producción)
+### 3. Run with Gunicorn (recommended for production)
 
 ```bash
 pip install gunicorn
 gunicorn -w 4 -b 0.0.0.0:8000 app.main:app --worker-class uvicorn.workers.UvicornWorker
 ```
 
-### 4. O con uvicorn en background
+### 4. Or run uvicorn in background
 
 ```bash
 nohup uvicorn app.main:app --host 0.0.0.0 --port 8000 > app.log 2>&1 &
@@ -33,71 +33,70 @@ nohup uvicorn app.main:app --host 0.0.0.0 --port 8000 > app.log 2>&1 &
 
 ---
 
-## Producción - Frontend (Extensión Chrome)
+## Production - Chrome Extension Frontend
 
-### 1. Actualizar manifest.json
+### 1. Update manifest.json
 
 ```json
 {
   "host_permissions": [
-    "https://tu-api-domain.com/*"
+    "https://your-api-domain.com/*"
   ]
 }
 ```
 
-### 2. Construir la extensión
+### 2. Build the extension
 
 ```bash
 cd frontend
 npm run build
 ```
 
-### 3. Empaquetar para Chrome Web Store
+### 3. Package for Chrome Web Store
 
 ```bash
 cd dist
 zip -r url-scan.zip .
 ```
 
-### 4. Publicar en Chrome Web Store
-- Ir a https://chrome.google.com/webstore/developer/dashboard
-- Subir el archivo .zip
-- Llenar información de la extensión
-- Esperar aprobación (2-3 días)
+### 4. Publish to Chrome Web Store
+- Go to https://chrome.google.com/webstore/developer/dashboard
+- Upload the .zip file
+- Fill in extension information
+- Wait for approval (2-3 days)
 
 ---
 
-## Verificaciones de Seguridad
+## Security Checklist
 
-- [ ] API Key guardado en variables de entorno
-- [ ] CORS restringido a dominio específico
-- [ ] HTTPS habilitado en producción
-- [ ] Validación de URLs implementada
-- [ ] Logs configurados correctamente
-- [ ] Rate limiting considerado
-- [ ] Base de datos (si aplica) segura
+- [ ] API Key stored in environment variables
+- [ ] CORS restricted to specific domain
+- [ ] HTTPS enabled on production
+- [ ] URL validation implemented
+- [ ] Logs configured correctly
+- [ ] Database (if applicable) is secure
 
 ---
 
-## Monitoreo
+## Monitoring
 
 ### Backend
 ```bash
-# Ver logs en tiempo real
+# View logs in real-time
 tail -f app.log
 
-# Verificar salud del API
-curl http://tu-dominio.com:8000/health
+# Check API health
+curl http://your-domain.com:8000/health
 ```
 
-### Extensión
-- Monitorear Chrome Web Store reviews
-- Logs en Chrome DevTools (Extensiones → Inspeccionar)
+### Extension
+- Monitor Chrome Web Store reviews
+- Check logs in Chrome DevTools (Extensions → Inspect)
 
 ---
 
-## Soporte
+## Support
 
-Para más información:
+For more information:
 - FastAPI Docs: https://fastapi.tiangolo.com/
 - Chrome Extension Docs: https://developer.chrome.com/docs/extensions/

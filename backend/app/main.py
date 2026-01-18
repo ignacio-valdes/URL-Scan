@@ -6,11 +6,11 @@ from fastapi import FastAPI, HTTPException
 
 app = FastAPI(
     title="URL-Scan API",
-    description="API para análisis de URLs",
+    description="API for URL analysis and threat detection",
     version="1.0.0"
 )
 
-# CORS: Configurar según ambiente
+# CORS configuration (environment-based)
 ALLOWED_ORIGINS = os.getenv("ALLOWED_ORIGINS", "http://127.0.0.1:8000").split(",")
 
 app.add_middleware(
@@ -21,20 +21,20 @@ app.add_middleware(
     allow_headers=["Content-Type"],
 )
 
-# Esquema de validación
+# Request schema for URL validation
 class URLRequest(BaseModel):
     url: HttpUrl
 
 @app.post("/analizar-url", tags=["Analysis"])
 async def analizar_url(request: URLRequest):
-    """Analizar una URL utilizando VirusTotal API"""
+    """Analyze a URL using VirusTotal API"""
     url = str(request.url)
     
     try:
-        reporte = await get_url(url)
-        return reporte
+        report = await get_url(url)
+        return report
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error al analizar URL: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Error analyzing URL: {str(e)}")
 
 @app.get("/health", tags=["Health"])
 async def health_check():

@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "URL-Scan",
   "version": "1.0.0",
-  "description": "Extensión de navegador para escaneo y análisis de URLs.",
+  "description": "Browser extension for URL scanning and security analysis",
   "permissions": [
     "activeTab",
     "tabs"
@@ -20,7 +20,7 @@
   },
   "action": {
     "default_popup": "index.html",
-    "default_title": "URL-Scan",
+    "default_title": "Scan URL for security threats",
     "default_icon": {
       "16": "icons/logo.png",
       "48": "icons/logo.png",

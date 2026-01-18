@@ -1,23 +1,23 @@
 # URL-Scan
 
-Extensión de navegador Chrome para escaneo y análisis de URLs usando VirusTotal API.
+Chrome browser extension for URL scanning and security analysis using VirusTotal API.
 
-## 🎯 Características
+## 🎯 Features
 
-- ✅ Análisis automático de URLs al cargar páginas
-- ✅ Badge visual con estado de seguridad
-- ✅ Popup con información detallada
-- ✅ Una solicitud por página (caching inteligente)
-- ✅ Bajo consumo de recursos
-- ✅ Interfaz moderna con TailwindCSS
+- ✅ Automatic URL analysis on page load
+- ✅ Visual badge with security status
+- ✅ Detailed popup information
+- ✅ Single request per page (smart caching)
+- ✅ Low resource consumption
+- ✅ Modern interface with TailwindCSS
 
-## 📋 Requisitos
+## 📋 Requirements
 
 - Node.js 18+ (frontend)
 - Python 3.8+ (backend)
-- Cuenta en [VirusTotal](https://www.virustotal.com/) con API Key
+- [VirusTotal](https://www.virustotal.com/) account with API Key
 
-## 🚀 Instalación Local
+## 🚀 Local Installation
 
 ### Backend (FastAPI)
 
@@ -27,17 +27,17 @@ python -m venv venv
 source venv/bin/activate  # Windows: venv\Scripts\activate
 pip install -r requirements.txt
 
-# Configurar variables de entorno
+# Configure environment variables
 cp .env.example .env
-# Editar .env con tu VIRUSTOTAL_API_KEY
+# Edit .env with your VIRUSTOTAL_API_KEY
 
-# Iniciar servidor
+# Start server
 uvicorn app.main:app --reload
 ```
 
-El API estará en `http://127.0.0.1:8000`
+API will be available at `http://127.0.0.1:8000`
 
-### Frontend (Extensión Chrome)
+### Frontend (Chrome Extension)
 
 ```bash
 cd frontend
@@ -45,55 +45,55 @@ npm install
 npm run build
 ```
 
-### Cargar extensión en Chrome
+### Load Extension in Chrome
 
-1. Abre `chrome://extensions/`
-2. Activa "Modo de desarrollador"
-3. Click "Cargar extensión sin empaquetar"
-4. Selecciona la carpeta `frontend/dist`
+1. Open `chrome://extensions/`
+2. Enable "Developer mode"
+3. Click "Load unpacked"
+4. Select the `frontend/dist` folder
 
-## 📦 Estructura
+## 📦 Project Structure
 
 ```
 .
-├── backend/               # API FastAPI
+├── backend/               # FastAPI backend
 │   ├── app/
-│   │   ├── main.py       # Endpoint principal
+│   │   ├── main.py       # Main endpoint
 │   │   └── services/
-│   │       └── virustotal.py  # Integración VirusTotal
+│   │       └── virustotal.py  # VirusTotal integration
 │   ├── requirements.txt
 │   └── .env.example
-├── frontend/             # Extensión Chrome
+├── frontend/             # Chrome extension
 │   ├── src/
-│   │   └── App.jsx      # Componente popup
+│   │   └── App.jsx      # Popup component
 │   ├── public/
 │   │   ├── manifest.json
 │   │   └── background.js # Service worker
 │   └── package.json
-└── DEPLOYMENT.md        # Guía de producción
+└── DEPLOYMENT.md        # Deployment guide
 ```
 
-## 🔒 Seguridad en Producción
+## 🔒 Security in Production
 
-Antes de publicar, revisa [DEPLOYMENT.md](./DEPLOYMENT.md):
+Before publishing, review [DEPLOYMENT.md](./DEPLOYMENT.md):
 
-- [ ] API Key en variables de entorno
-- [ ] CORS restringido a dominio específico
-- [ ] HTTPS habilitado
-- [ ] Validación de URLs
-- [ ] Rate limiting configurado
+- [ ] API Key in environment variables
+- [ ] CORS restricted to specific domain
+- [ ] HTTPS enabled
+- [ ] URL validation implemented
+- [ ] Rate limiting configured
 
-## 📊 Estados de Seguridad
+## 📊 Security Status Indicators
 
-- 🟢 **OK**: Seguro
-- 🔴 **MAL**: Malicioso
-- 🟠 **?**: No clasificado
-- ⚫ **ERR**: Error de conexión
+- 🟢 **OK**: Safe
+- 🔴 **MAL**: Malicious
+- 🟠 **?**: Unclassified
+- ⚫ **ERR**: Connection error
 
 ## 🛠 API Endpoints
 
 ### POST `/analizar-url`
-Analiza una URL
+Analyze a URL
 
 **Request:**
 ```json
@@ -103,9 +103,9 @@ Analiza una URL
 **Response:**
 ```json
 {
-  "status": "encontrado",
+  "status": "found",
   "stats": {
-    "malicioso": 0,
+    "malicious": 0,
     "sospechoso": 0,
     "no_clasificado": 0,
     "seguro": 85
@@ -114,16 +114,16 @@ Analiza una URL
 ```
 
 ### GET `/health`
-Verifica estado del API
+Health check endpoint
 
-## 📝 Licencia
+## 📝 License
 
 MIT
 
-## 👨‍💻 Autor
+## 👨‍💻 Author
 
-Desarrollado como proyecto educativo.
+Developed as an educational project.
 
 ---
 
-Para información de deployment, ver [DEPLOYMENT.md](./DEPLOYMENT.md)
+For deployment information, see [DEPLOYMENT.md](./DEPLOYMENT.md)

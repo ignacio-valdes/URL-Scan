@@ -1,105 +1,106 @@
-# 📋 CHECKLIST DE PRODUCCIÓN - URL-Scan
+# 📋 PRODUCTION CHECKLIST - URL-Scan
 
-## ✅ CÓDIGO
+## ✅ CODE
 
-- [x] Backend: Validación de URLs con Pydantic
-- [x] Backend: CORS restringido (configurable)
-- [x] Backend: Manejo de errores mejorado
+- [x] Backend: URL validation with Pydantic
+- [x] Backend: CORS restricted (configurable)
+- [x] Backend: Enhanced error handling
 - [x] Backend: Health check endpoint
-- [x] Frontend: Sin hardcoding de URLs (API_URL variable)
-- [x] Frontend: Popup funciona correctamente
+- [x] Frontend: No hardcoded URLs (API_URL variable)
+- [x] Frontend: Popup working correctly
 - [x] Extension: Manifest V3 compatible
-- [x] Extension: Caching de datos implementado
-- [x] Documentación: README actualizado
-- [x] Documentación: DEPLOYMENT.md creado
+- [x] Extension: Data caching implemented
+- [x] Documentation: README updated
+- [x] Documentation: DEPLOYMENT.md created
 
-## 🔐 SEGURIDAD
+## 🔐 SECURITY
 
-- [ ] Verificar API Key está en .env (NO en código)
-- [ ] Cambiar ALLOWED_ORIGINS en .env a tu dominio
-- [ ] HTTPS habilitado en producción
-- [ ] Rate limiting implementado (opcional)
-- [ ] Validación de CORS headers
-- [ ] Logs configurados sin datos sensibles
-- [ ] No subir .env a repositorio
+- [ ] Verify API Key is in .env (NOT in code)
+- [ ] Change ALLOWED_ORIGINS in .env to your domain
+- [ ] HTTPS enabled in production
+- [ ] URL validation implemented
+- [ ] Logs configured without sensitive data
+- [ ] Rate limiting implemented (optional)
+- [ ] CORS headers validation
+- [ ] Don't push .env to repository
 
 ## 🧪 TESTING
 
-- [ ] Probar con URLs seguras (OK)
-- [ ] Probar con URLs maliciosas (MAL)
-- [ ] Probar con URLs no clasificadas (?)
-- [ ] Probar sin conexión a API (ERR)
-- [ ] Probar en múltiples pestañas
-- [ ] Probar caching (navegar URL → recargar → popup)
+- [ ] Test with safe URLs (OK)
+- [ ] Test with malicious URLs (MAL)
+- [ ] Test with unclassified URLs (?)
+- [ ] Test without API connection (ERR)
+- [ ] Test across multiple tabs
+- [ ] Test caching (navigate URL → reload → open popup)
 
-## 📦 DEPLOYMENT BACKEND
+## 📦 BACKEND DEPLOYMENT
 
 ```bash
-# 1. Preparar servidor
+# 1. Prepare server
 python -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
 
-# 2. Configurar variables
+# 2. Configure variables
 cp .env.example .env
-# Editar .env con valores reales
+# Edit .env with real values
 
-# 3. Verificar que funciona
+# 3. Verify it works
 python -m uvicorn app.main:app --reload
 
-# 4. Hacer deploy con gunicorn
+# 4. Deploy with gunicorn
 gunicorn -w 4 -b 0.0.0.0:8000 app.main:app --worker-class uvicorn.workers.UvicornWorker
 
-# 5. Verificar salud
-curl https://tu-dominio.com/health
+# 5. Verify health
+curl https://your-domain.com/health
 ```
 
-## 📦 DEPLOYMENT EXTENSIÓN
+## 📦 EXTENSION DEPLOYMENT
 
 ```bash
-# 1. Construir
+# 1. Build
 cd frontend && npm run build
 
-# 2. Actualizar manifest.json con host_permissions
-# Cambiar "http://127.0.0.1:8000/*" por "https://tu-api-domain/*"
+# 2. Update manifest.json with host_permissions
+# Change "http://127.0.0.1:8000/*" to "https://your-api-domain/*"
 
-# 3. Empaquetar
+# 3. Package
 cd dist && zip -r ../url-scan.zip .
 
-# 4. Publicar en Chrome Web Store
+# 4. Publish to Chrome Web Store
 # https://chrome.google.com/webstore/developer/dashboard
 ```
 
-## ✨ MEJORAS OPCIONALES
+## ✨ OPTIONAL IMPROVEMENTS
 
-- [ ] Agregar loader/spinner en popup
-- [ ] Mostrar más detalles de análisis
-- [ ] Histórico de URLs analizadas
-- [ ] Opción para rescannear
-- [ ] Temas oscuro/claro
-- [ ] Soporte multi-idioma
-- [ ] Options page para configuración
+- [ ] Add loader/spinner in popup
+- [ ] Show more analysis details
+- [ ] URL history feature
+- [ ] Option to rescan
+- [ ] Dark/light theme support
+- [ ] Multi-language support
+- [ ] Options page for configuration
 
-## 📊 MONITOREO
+## 📊 MONITORING
 
-Después del deploy:
+After deployment:
 
 ```bash
-# Logs del backend
+# Backend logs
 tail -f /var/log/url-scan/app.log
 
-# Verificar API
-curl https://tu-dominio.com/health
+# Verify API
+curl https://your-domain.com/health
 
 # Chrome Web Store
-# Monitorear reviews y ratings
+# Monitor reviews and ratings
 ```
 
-## 🚨 PROBLEMAS CONOCIDOS
+## 🚨 KNOWN ISSUES
 
-Ninguno - Listo para producción ✨
+None - Ready for production ✨
 
 ---
 
-**Última actualización:** 2026-01-18
-**Versión:** 1.0.0
+**Last updated:** 2026-01-18
+**Version:** 1.0.0

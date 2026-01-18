@@ -1,11 +1,11 @@
-# Ejemplo de manifest.json para PRODUCCIÓN
-# Copia estos valores a frontend/public/manifest.json cuando despliegues
+# Example of manifest.json for PRODUCTION
+# Copy these values to frontend/public/manifest.json when deploying
 
 {
   "manifest_version": 3,
   "name": "URL-Scan",
   "version": "1.0.0",
-  "description": "Extensión de navegador para escaneo y análisis de URLs.",
+  "description": "Browser extension for URL scanning and security analysis.",
   
   "permissions": [
     "activeTab",
@@ -30,7 +30,7 @@
   
   "action": {
     "default_popup": "index.html",
-    "default_title": "Analizar URL con URL-Scan"
+    "default_title": "Analyze URL with URL-Scan"
   },
   
   "content_security_policy": {
