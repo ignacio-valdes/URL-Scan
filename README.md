@@ -75,7 +75,7 @@ npm run build
 
 ## 🔒 Security in Production
 
-Before publishing, review [DEPLOYMENT.md](./DEPLOYMENT.md):
+Before publishing, review [DEPLOYMENT.md](./DEPLOYMENT.md) and the [Production Checklist](./PRODUCTION_CHECKLIST.md):
 
 - [ ] API Key in environment variables
 - [ ] CORS restricted to specific domain
@@ -116,11 +116,23 @@ Analyze a URL
 ### GET `/health`
 Health check endpoint
 
+## ⚠️ Legal Disclaimer
+
+This tool is provided for educational and research purposes only. The author is not responsible for any misuse of this software or any legal consequences arising from its use.
+
+This project interacts with the VirusTotal API. Users are responsible for complying with the VirusTotal Terms of Service. You must obtain and use your own personal API Key. The author of this repository does not provide API keys and is not affiliated with VirusTotal.
+
 ## 📝 License
 
-MIT
+[MIT](./LICENSE)
+
+## 🙏 Acknowledgements
+
+- [VirusTotal](https://www.virustotal.com/) for providing the threat intelligence API used in this project.
 
 ## 👨‍💻 Author
+
+- [Ignacio Valdés](https://github.com/ignacio-valdes)
 
 Developed as an educational project.
 
